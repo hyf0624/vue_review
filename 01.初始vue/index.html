@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <h2>人员列表</h2>
+      <button @click="editFirstPerson">修改第一个人的信息</button>
+      <button @click="addNewProperty">给第一个人添加一个新属性</button>
+
+      <span>{{ person[0].hobby }}</span>
+      <ul>
+        <li v-for="(item, index) in person" :key="index">{{item.name}} -- {{item.age}} -- {{item.sex}}</li>
+      </ul>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+      //创建vue 实例
+      Vue.config.productionTip = false
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          keyword: '',
+          person: [
+            {
+              sex: '女',
+              name: '马冬梅',
+              age: 18
+            },
+            {
+              sex: '女',
+              name: '周冬雨',
+              age: 19
+            },
+            {
+              sex: '男',
+              name: '周杰伦',
+              age: 20
+            },
+            {
+              sex: '男',
+              name: '温兆伦',
+              age: 40
+            }
+          ]
+        },
+        methods: {
+          editFirstPerson() {
+            // 如下这样改是没问题的, 但是这种写法太繁琐了
+            // this.person[0].name = '孙悟空'
+            // this.person[0].sex = '男'
+            // this.person[0].age = 500
+
+            // 但是下面这种方式 Vue是监测不到的
+            // this.person[0] = {
+            //   sex: '男',
+            //   name: '孙悟空',
+            //   age: 500
+            // }
+
+            // 通过splice 才能被监听到
+            this.person.splice(0, 1, { sex: '男', name: '孙悟空', age: 500 })
+            //还可以这样写
+            //this.$set(this.person, 0, { sex: '男', name: '孙悟空', age: 500 })
+          },
+          addNewProperty() {
+            // 这种写法是监测不到的，无法更新到页面的
+            // this.person[0].hobby = '网上冲浪'
+
+            this.$set(this.person[0], 'hobby', '网上冲浪')
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

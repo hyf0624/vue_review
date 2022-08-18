@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 
+    需求一: 定义一个v-big指令，和v-text功能类似，但会把绑定的数值放大十倍
+    需求二：定义一个v-fbind指令，和v-bind类似，但可以让其所绑定的input元素默认获取焦点
+   -->
+    <div id="root">
+      <h2>当前n的值：<span v-text="n"></span></h2>
+      <h2>放大十倍后n的值：<span v-big="n" class="text"></span></h2>
+      <div class="box" v-big></div>
+      <button @click="n++">n + 1</button>
+      <hr />
+      <input type="text" v-fbind="n" />
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+      Vue.config.productionTip = false;
+      // 全局自定义指令
+      Vue.directive("fbind", {
+        // 指令与元素成功绑定时调用
+        bind(element, binding) {
+          element.value = binding.value;
+        },
+        //指令所在元素被插入页面时调用
+        inserted(element, binding) {
+          element.focus();
+        },
+        // 指令所在模板被重新解析时调用
+        update(element, binding) {
+          element.value = binding.value;
+        },
+      });
+      new Vue({
+        el: "#root",
+        data: {
+          n: 1,
+        },
+        directives: {
+          // big函数何时会被调用?
+          // 1.指令和元素成功绑定时。 2.指令所在的模板被重新解析时。
+
+          big(element, binding) {
+            console.log(this, "big"); // 注意此处的this是window
+            //console.log(element instanceof HTMLElement); // true
+            //console.dir(element); // 真实的dom元素
+            //console.log(binding.value);
+            if (element.className === "text") {
+              element.innerText = binding.value * 10;
+            } else {
+              element.style.height = "100px";
+              element.style.width = "100px";
+              element.style.border = "1px solid black";
+            }
+          },
+          // fbind(element, binding) {
+          //   element.value = binding.value;
+          //   element.focus(); // 直接在这获取焦点是不起作用的，因为此时页面中并没有input框
+          // },
+
+          // 自定义指令的对象写法
+          fbind: {
+            // 指令与元素成功绑定时调用
+            bind(element, binding) {
+              element.value = binding.value;
+            },
+            //指令所在元素被插入页面时调用
+            inserted(element, binding) {
+              element.focus();
+            },
+            // 指令所在模板被重新解析时调用
+            update(element, binding) {
+              element.value = binding.value;
+            },
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

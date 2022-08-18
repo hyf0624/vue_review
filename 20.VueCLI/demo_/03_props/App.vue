@@ -1,0 +1,19 @@
+<template>
+  <div id="app">
+    <Student name="方明旺" sex="男" :age="18"></Student>
+  </div>
+</template>
+
+<script>
+import Student from "./components/Student.vue";
+export default {
+  name: "App",
+  components: {
+    Student,
+  },
+  data() {
+    return {};
+  },
+};
+</script>
+<style scoped lang="scss"></style>
