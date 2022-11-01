@@ -1,23 +1,30 @@
 <template>
   <div id="app">
-    <Count></Count>
-    <Person></Person>
+    <ul>
+      <li>
+        <!-- 路由query传参方式 -->
+        <router-link to="/home">Home</router-link>
+      </li>
+      <li><router-link to="/about">About</router-link></li>
+    </ul>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Count from './components/Count.vue'
-import Person from './components/Person.vue'
 export default {
   name: 'App',
-  components: {
-    Count,
-    Person
-  },
+  components: {},
   data() {
-    return {}
+    return {
+      activeName: 'first'
+    }
   },
   methods: {}
 }
 </script>
-<style scoped></style>
+<style scoped>
+ul li {
+  list-style-type: none;
+}
+</style>
