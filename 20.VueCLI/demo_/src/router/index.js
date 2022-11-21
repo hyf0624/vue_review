@@ -1,9 +1,12 @@
+import Vue from 'vue'
 import VueRouter from 'vue-router'
 import About from '../components/About.vue'
 import Home from '../components/Home.vue'
 import News from '../components/News.vue'
 import Message from '../components/Message.vue'
+Vue.use(VueRouter)
 export default new VueRouter({
+  mode: 'history',
   routes: [
     {
       path: '/about',
@@ -16,7 +19,10 @@ export default new VueRouter({
         {
           path: 'news',
           name: 'news',
-          component: News
+          component: News,
+          beforeEnter: (to, from, next) => {
+            // ...
+          }
         },
         {
           // :id和:title 都是属于占位符，路由params传参的时候需要

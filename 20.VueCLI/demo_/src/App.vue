@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <el-button>测试按钮</el-button>
     <ul>
       <li>
         <!-- 路由query传参方式 -->

@@ -13,7 +13,9 @@
           <button @click="toMessage">跳转到Message</button>
         </li>
       </ul>
-      <router-view></router-view>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </div>
   </div>
 </template>
