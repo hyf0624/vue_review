@@ -1,31 +1,27 @@
 <template>
   <div id="app">
-    <el-button>测试按钮</el-button>
-    <ul>
-      <li>
-        <!-- 路由query传参方式 -->
-        <router-link to="/home">Home</router-link>
-      </li>
-      <li><router-link to="/about">About</router-link></li>
-    </ul>
-    <router-view></router-view>
+    <!-- //此处监听了两个事件，可以在B组件或者C组件中直接触发 -->
+    <Child :foo="foo" :bar="bar" @upFoo="update" />
   </div>
 </template>
 
 <script>
+import Child from './components/Child.vue'
 export default {
   name: 'App',
-  components: {},
+  components: { Child },
   data() {
     return {
-      activeName: 'first'
+      foo: 'foo',
+      bar: 'bar'
     }
   },
-  methods: {}
+  methods: {
+    update(val) {
+      this.foo = val
+      console.log('update success')
+    }
+  }
 }
 </script>
-<style scoped>
-ul li {
-  list-style-type: none;
-}
-</style>
+<style scoped></style>
